@@ -5,7 +5,11 @@
       <v-form @submit.prevent="register" ref="registerForm" v-model="valid">
         <v-container class="d-flex justify-space-between">
           <v-container>
-            <v-text-field v-model="username" :rules="usernameRules" label="Username" required></v-text-field>
+            <v-text-field 
+            v-model="username"
+             :rules="usernameRules"
+              label="Username"
+               required></v-text-field>
             <v-text-field
               v-model="password"
               name="password"
@@ -67,8 +71,8 @@
 //import { appKey, appSecret } from '../../plugins/axios'
 //import { http } from '../../services/httpClient.js'
 import { register } from '../../services/authService.js';
-
 import { mapActions } from "vuex";
+
 export default {
   name: "Register",
   data() {

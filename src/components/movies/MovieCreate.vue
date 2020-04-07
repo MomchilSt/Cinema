@@ -3,11 +3,17 @@
     <v-row align="center" class="card">
       <h2>Create movie</h2>
       <v-form @submit.prevent="createMovie" ref="createMovieForm" v-model="valid">
-        <v-text-field v-model="title" :rules="titleRules" label="Title" required></v-text-field>
+        <v-text-field 
+        v-model="title"
+        :rules="titleRules"
+        label="Title"
+        required>
+        </v-text-field>
         <v-textarea
         v-model="description"
         :rules="descriptionRules"
-         required>
+        label="Description"
+        required>
           <template v-slot:label>
             <div>
               Add brief description
@@ -18,7 +24,7 @@
 
         <v-container class="row">
             <v-select class="col-6"
-              v-model="select"
+              v-model="cinema"
               :items="cinemas"
               :rules="[v => !!v || 'Cinema is required']"
               label="Cinema"
@@ -26,7 +32,7 @@
             ></v-select> 
             
             <v-select class="col-6"
-              v-model="select"
+              v-model="category"
               :items="categories"
               :rules="[v => !!v || 'Category is required']"
               label="Category"
@@ -37,7 +43,7 @@
         <v-text-field 
         v-model="posterImg"
         :rules="posterRules"
-         required
+        required
          >
           <template v-slot:label>
             Add poster link here? <v-icon style="vertical-align: middle">find_in_page</v-icon>
@@ -59,7 +65,6 @@
           type="submit"
           :disabled="!valid"
           color="success"
-          @click="validate"
           class="mr-4"
            width="420">Create movie</v-btn>
         </v-container>        
@@ -69,13 +74,17 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { createMovie } from '../../services/movieService'
+//import { http } from '../../services/httpClient'
 export default {
     valid: true,
     data() {
         return {
             title: "",
             titleRules: [
-                v => !!v || "Title is required!"
+                v => !!v || "Title is required!", 
+                v => (v && v.length >= 3) || "Title must be atleast 3 characters."
             ],
             description: "",
             descriptionRules: [
@@ -89,15 +98,48 @@ export default {
             trailerRules: [
                 v => !!v || "Trailer is required!"
             ],
+            cinema: "",
+            category: "",
             categories: ["Action", "Comedy", "Fantasy"],
             cinemas: ["Cinemax", "Arena", "Cinegrand"]
         }
     },
-     validate() {
-      if (this.$refs.registerForm.validate()) {
-        this.snackbar = true;
-      }
+    methods: {
+      //createMovie() { console.log(this.title) }
+       ...mapActions([createMovie]),
+      async createMovie() {
+        try {
+          await this[createMovie]({
+          title: this.title,
+          description: this.description,
+          posterImg: this.posterImg,
+          trailerLink: this.trailerLink,
+          category: this.categories,
+          cinema: this.cinemas
+        });
+        this.$router.push({ path: '/movie-list' })
+        this.$toast.success('Successfully Created Movie!');
+        } catch (err) {
+          this.$toast.error(`Error occurred! ${err}`);
+          this.$refs.registerForm.reset();
+        }
     },
+      //   try {
+      //     //let { movie } = payload;
+      //     http.post('movies', { 
+      //       title: this.title,
+      //       description: this.description,
+      //       posterImg: this.posterImg,
+      //       trailerLink: this.trailerLink,
+      //       category: this.category,
+      //       cinema: this.cinema
+      //       });
+      //     //toastSuccess('Successfully create student!');
+      //   } catch (err) {
+      //     //toastError(`Something went wrong! ${err}`);
+      //   }
+      // }
+    }
 }
 </script>
 
