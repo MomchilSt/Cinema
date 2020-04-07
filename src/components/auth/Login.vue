@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { login } from '../../services/authService'
+import { mapActions } from 'vuex'
 export default {
   name: "Login",
   data() {
@@ -50,8 +52,19 @@ export default {
     };
   },
   methods: {
-    login() {
-        console.log(this.username + " " + this.password)
+    ...mapActions([login]),
+    async login(ev) {
+      ev.preventDefault();
+      try {
+        await this[login]({
+          username: this.username,
+          password: this.password,
+        });
+      this.$router.push({ path: '/' })
+      this.$toast.success('Successfully Logged!');
+      } catch (err) {
+        this.$toast.error(`Error occurred! ${err}`);
+      }
     },
     validate() {
       if (this.$refs.loginForm.validate()) {

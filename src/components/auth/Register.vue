@@ -63,8 +63,12 @@
 </template>
 
 <script>
-import axios from '../../../node_modules/axios'
-import { appKey, appSecret } from '../../plugins/axios'
+//import axios from '../../../node_modules/axios'
+//import { appKey, appSecret } from '../../plugins/axios'
+//import { http } from '../../services/httpClient.js'
+import { register } from '../../services/authService.js';
+
+import { mapActions } from "vuex";
 export default {
   name: "Register",
   data() {
@@ -99,39 +103,29 @@ export default {
     };
   },
   methods: {
-    register() {
-      const authString = btoa(`${appKey}:${appSecret}`);
-      axios({
-        method: 'post',
-        url: `https://baas.kinvey.com/user/${appKey}`, 
-        data: { 
+    ...mapActions([register]),
+    async register(ev) {
+      ev.preventDefault();
+      try{
+        await this[register]({
           username: this.username,
-          password: this.password,
           name: this.name,
           email: this.email,
-          position: this.select
-        },
-        headers: {
-        'Authorization': `Basic ${authString}`,
-        'Content-Type': 'application/json'
-        }}).then(() => {
-          this.$router.push('/')
-            this.$toast.success('You have successfully registered!', {
-            showClose: true,
-            icon: 'done'
-          });
-        }).catch(() => {
-            this.$toast.error('Error occurred! Please try again.', {
-              showClose: true,
-              icon: 'cancel'
-            });
-        })
+          password: this.password,
+          role: this.select
+        });
+        this.$router.push({ path: '/login' })
+        this.$toast.success('Successfully Registered!');
+      } catch (err) {
+          this.$toast.error(`Error occurred! ${err}`);
+          this.$refs.registerForm.reset();
+      }
     },
     reset() {
       this.$refs.registerForm.reset();
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -163,3 +157,16 @@ h2 {
   margin-bottom: 40px;
 }
 </style>
+
+ // register() {
+    //   let username = this.username;
+    //   let password = this.password;
+    //   let name = this.name;
+    //   let email = this.email;
+    //   let role = this.select;
+    //   try {
+    //   http.post('', { username, password, name, email, role });
+    //   this.$toast.success('Successfully Registered!');
+    //   this.$route.push("/");
+    // } catch (err) {
+    //   this.$toast.error(`Something went wrong! ${err}`);}

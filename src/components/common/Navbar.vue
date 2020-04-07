@@ -43,12 +43,10 @@
         <span class="mr-2">Create Cinema</span>
       </v-btn>
     </router-link>
-    <router-link to="/logout">
-      <v-btn text>
+    <v-btn text @click="logout">
         <v-icon>cancel</v-icon>
         <span class="mr-2">Logout</span>
       </v-btn>
-    </router-link>
     <router-link to="/login">
       <v-btn text>
         <v-icon>person_pin</v-icon>
@@ -65,7 +63,17 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { logout } from '../../services/authService'
 export default {
+  methods: {
+    ...mapActions([logout]),
+    logout() {
+      this[logout]();
+      this.$router.push('/');
+      this.$toast.success('Successfully logouted out!');
+    },
+  }
 }
 </script>
 
