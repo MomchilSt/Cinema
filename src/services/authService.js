@@ -1,6 +1,7 @@
 import { http } from '../services/httpClient';
 const initialState = {
   isAuth: localStorage.getItem('authtoken') !== null,
+  isAdmin: localStorage.getItem('role'),
   authtoken: localStorage.getItem('authtoken'),
 };
 
@@ -15,6 +16,7 @@ export const { login, logout, register } = actionTypes;
 const getters = {
   authtoken: (state) => state.authtoken,
   isAuth: (state) => state.isAuth,
+  isAdmin: (state) => state.isAdmin,
 };
 
 const actions = {
@@ -22,6 +24,12 @@ const actions = {
     try {
       const { username, password } = payload;
       const { data } = await http.post('login', { username, password });
+
+      let adminCheck = false;
+      if (data.role == "Administrator") {
+        adminCheck = true;
+      }
+      
       localStorage.setItem('authtoken', data._kmd.authtoken);
       localStorage.setItem('role', data.role);
       localStorage.setItem('userInfo', JSON.stringify(data));
@@ -29,6 +37,7 @@ const actions = {
         userInfo: data,
         authtoken: data._kmd.authtoken,
         isAuth: true,
+        isAdmin: adminCheck
       });
     } catch (err) {
       this.$toast.error(`Something went wrong! ${err}`);
@@ -52,7 +61,7 @@ const mutations = {
     Object.assign(state, payload);
   },
   [logout](state) {
-    Object.assign(state, { isAuth: false, authtoken: null, userInfo: null });
+    Object.assign(state, { isAuth: false, isAdmin: false, authtoken: null, userInfo: null });
   },
 };
 
