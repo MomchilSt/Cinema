@@ -67,9 +67,6 @@
 </template>
 
 <script>
-//import axios from '../../../node_modules/axios'
-//import { appKey, appSecret } from '../../plugins/axios'
-//import { http } from '../../services/httpClient.js'
 import { register } from '../../services/authService.js';
 import { mapActions } from "vuex";
 

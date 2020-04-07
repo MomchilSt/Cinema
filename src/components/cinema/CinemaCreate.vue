@@ -22,7 +22,6 @@
           type="submit"
           :disabled="!valid"
           color="success"
-          @click="validate"
           class="mr-4"
            width="420">Create cinema</v-btn>
         </v-container>        
@@ -32,6 +31,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { createCinema } from '../../services/cinemaService'
 export default {
     valid: true,
     data() {
@@ -53,11 +54,23 @@ export default {
             ]
         }
     },
-     validate() {
-      if (this.$refs.registerForm.validate()) {
-        this.snackbar = true;
-      }
-    },
+    methods: {
+      ...mapActions([createCinema]),
+      async createCinema() {
+        try {
+          await this[createCinema]({
+          name: this.name,
+          address: this.address,
+          cinemaImg: this.cinemaImg,
+        });
+        this.$router.push({ path: '/' })
+        this.$toast.success('Successfully Created Cinema!');
+        } catch (err) {
+          this.$toast.error(`Error occurred! ${err}`);
+          this.$refs.registerForm.reset();
+        }
+    }
+  }
 }
 </script>
 

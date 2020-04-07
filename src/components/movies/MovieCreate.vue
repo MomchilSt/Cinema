@@ -76,7 +76,6 @@
 <script>
 import { mapActions } from 'vuex'
 import { createMovie } from '../../services/movieService'
-//import { http } from '../../services/httpClient'
 export default {
     valid: true,
     data() {
@@ -105,7 +104,6 @@ export default {
         }
     },
     methods: {
-      //createMovie() { console.log(this.title) }
        ...mapActions([createMovie]),
       async createMovie() {
         try {
@@ -124,22 +122,7 @@ export default {
           this.$refs.registerForm.reset();
         }
     },
-      //   try {
-      //     //let { movie } = payload;
-      //     http.post('movies', { 
-      //       title: this.title,
-      //       description: this.description,
-      //       posterImg: this.posterImg,
-      //       trailerLink: this.trailerLink,
-      //       category: this.category,
-      //       cinema: this.cinema
-      //       });
-      //     //toastSuccess('Successfully create student!');
-      //   } catch (err) {
-      //     //toastError(`Something went wrong! ${err}`);
-      //   }
-      // }
-    }
+  }
 }
 </script>
 
