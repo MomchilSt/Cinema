@@ -6,6 +6,7 @@ import moviesRoute from './moviesRoute'
 import cinemasRoute from './cinemasRoute'
 import NotFound from '../components/common/NotFound'
 import Profile from '../components/user/Profile'
+import { authGuard } from '../services/guards/guards'
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,8 @@ const appRoutes = [
   {
     path: '/profile',
     name: 'profile',
-    component: Profile
+    component: Profile,
+    beforeEnter: authGuard
   },
   {
     path: '*',
