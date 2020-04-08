@@ -55,7 +55,7 @@ export default {
         }
     },
     methods: {
-      ...mapActions([createCinema]),
+      ...mapActions('cinemaService', [createCinema]),
       async createCinema() {
         try {
           await this[createCinema]({

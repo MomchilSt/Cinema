@@ -25,7 +25,7 @@
         <v-container class="row">
             <v-select class="col-6"
               v-model="cinema"
-              :items="cinemas"
+              :items="allCinemaNames"
               :rules="[v => !!v || 'Cinema is required']"
               label="Cinema"
               required
@@ -74,8 +74,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { createMovie } from '../../services/movieService'
+import { getAllCinemaNames } from '../../services/cinemaService'
 export default {
     valid: true,
     data() {
@@ -104,6 +105,7 @@ export default {
         }
     },
     methods: {
+       ...mapActions('cinemaService', [getAllCinemaNames]),
        ...mapActions('movieService', [createMovie]),
       async createMovie() {
         try {
@@ -122,6 +124,12 @@ export default {
           this.$refs.registerForm.reset();
         }
     },
+  },
+  computed: {
+    ...mapGetters('cinemaService', ['allCinemaNames']),
+  },
+  created() {
+    this[getAllCinemaNames]()
   }
 }
 </script>
