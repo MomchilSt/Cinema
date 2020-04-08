@@ -104,7 +104,7 @@ export default {
         }
     },
     methods: {
-       ...mapActions([createMovie]),
+       ...mapActions('movieService', [createMovie]),
       async createMovie() {
         try {
           await this[createMovie]({
