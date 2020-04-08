@@ -2,7 +2,6 @@ import { http } from '../services/httpClient';
 
 const initialState = {
     userInfo: JSON.parse(localStorage.getItem('userInfo')),
-    userRole: JSON.parse(localStorage.getItem('userInfo')),
 };
 
 export const actionTypes = {
@@ -22,9 +21,6 @@ const actions = {
           commit(updateUserInfo, user);
           return;
         }
-        user.name = payload.name;
-        user.email = payload.email;
-        localStorage.setItem('userInfo', user);
         const { data } = await http.put(user._id, payload);
         commit(updateUserInfo, data);
       },

@@ -63,7 +63,7 @@ export default {
       this.$router.push({ path: '/' })
       this.$toast.success('Successfully Logged!');
       } catch (err) {
-        this.$toast.error(`Error occurred! ${err}`);
+        this.$toast.error(`Login Error occurred!`);
       }
     },
     validate() {

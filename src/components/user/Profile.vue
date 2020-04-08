@@ -41,7 +41,6 @@
         </v-layout>
     </v-container>
 </template>
-
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import { updateUserInfo } from '../../services/userService'
