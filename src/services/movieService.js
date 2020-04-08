@@ -5,8 +5,8 @@ const initialState = {
 };
 
 export const actionTypes = {
-  getAllMovies: 'GET ALL MOVIES SUCCESS',
-  createMovie: 'CREATE NEW MOVIE SUCCESS',
+  getAllMovies: 'GET ALL MOVIES',
+  createMovie: 'CREATE NEW MOVIE',
   };
   
   export const {

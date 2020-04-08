@@ -6,9 +6,9 @@ const initialState = {
 };
 
 export const actionTypes = {
-  login: 'auth/LOGIN SUCCESS',
-  register: 'auth/REGISTER SUCCESS',
-  logout: 'auth/LOGOUT SUCCESS',
+  login: 'LOGIN',
+  register: 'REGISTER',
+  logout: 'LOGOUT',
 };
 
 export const { login, logout, register } = actionTypes;
