@@ -5,62 +5,82 @@
                 <v-card-text align="center">
                     <v-flex class="mb-4">
                         <v-avatar size="190" class="mr-4">
-                            <img src="https://i.guim.co.uk/img/media/dd3882c4ad0fd11a14cffc7e5edaabe5ce8a8b53/0_85_1077_646/master/1077.jpg?width=700&quality=85&auto=format&fit=max&s=c906598d7b435814a7e49a5ee4779c2f" alt="Avatar">
+                            <img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="Avatar">
                         </v-avatar>
                     </v-flex>
-                    <v-text-field
-                        class="pt-0"
-                        v-model="form.imgUrl"
-                        label="Avatar"></v-text-field>
-                    <v-btn >Change Avatar</v-btn>
-                    <v-text-field
-                        v-model="form.firstName"
-                        label="Name"></v-text-field>
-                    <v-text-field
-                        v-model="form.contactEmail"
-                        label="Email Address"></v-text-field>
-                  <v-col class="pt-0">
-                  <v-autocomplete
-                    :items="['Action', 'Fantasy', 'Comedy', 'Adventure']"
-                    label="Add Interests"
-                    multiple
-                  ></v-autocomplete>
-                </v-col>
+                    <v-card-text><h2>Hello</h2></v-card-text>
+                    <v-form @submit.prevent="updateUser" ref="updateUserForm" v-model="valid">
+                        <v-row>
+                            <v-card-text><h4>Name: {{userInfo.name}}</h4></v-card-text>
+                            <v-card-text><h4>Email: {{userInfo.email}}</h4></v-card-text>
+                        </v-row>
+                        <v-text-field
+                        v-model="newName"
+                        :rules="newNameRules"
+                        required
+                        label="Change Name"></v-text-field>
+                        <v-text-field
+                            v-model="newEmail"
+                            :rules="newEmailRules"
+                            required
+                            label="Change Email Address"></v-text-field>
+                        <v-col class="pt-0">
+                        </v-col>
+
+                        <v-btn 
+                        align="center"
+                        :disabled="!valid"
+                        color="primary" 
+                        type="submit">
+                            <v-icon left dark>check</v-icon>
+                            Save Changes
+                        </v-btn>
+                    </v-form>
                 </v-card-text>
-                <v-card-actions class="pt-0">
-                    <v-btn color="primary" :loading="loading" @click.native="update">
-                        <v-icon left dark>check</v-icon>
-                        Save Changes
-                    </v-btn>
-                </v-card-actions>
             </v-card>
         </v-layout>
     </v-container>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import { updateUserInfo } from '../../services/userService'
     export default {
         data () {
             return {
-                loading: false,
-                form: {
-                    firstName: 'John',
-                    imgUrl: "",
-                    contactEmail: 'john@doe.com',
-                    avatar: 'MALE_CAUCASIAN_BLOND_BEARD'
-                },
-                showAvatarPicker: false
+                valid: true,
+                newName: "",
+                newNameRules: [
+                  v => !!v || "Name is required",
+                  v => (v && v.length >= 3) || "Minimum of 3 characters"
+                ],
+                newEmail: "",
+                newEmailRules: [
+                  v => !!v || "E-mail is required",
+                  v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+                ],
             }
         },
+        computed: {
+            ...mapGetters('userService', ['userInfo']),
+        },
         methods: {
-            openAvatarPicker () {
-                this.showAvatarPicker = true
-            },
-            selectAvatar (avatar) {
-                this.form.avatar = avatar
+            ...mapActions('userService', [updateUserInfo]),
+            updateUser() {
+            this.user = {
+                name: this.newName,
+                email: this.newEmail,
+                role: this.userInfo.role,
+                username: this.userInfo.username
             }
-        }
+            try {
+                this[updateUserInfo](this.user)
+            } catch (err) {
+                console.log(err)
+            }
+        },
     }
+}
 </script>
 <style scoped>
 .v-text-field {

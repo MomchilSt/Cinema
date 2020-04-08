@@ -56,13 +56,13 @@ http.interceptors.request.use(loggerInterceptor);
 
 const errorInterceptor = function(error) {
   if (error.response.status === 401) {
-    this.$toast.error(`${error.response.status}: ${error.response.statusText} Please try again.`);
+    console.log("Error 401")
   } else if (error.response.status === 500) {
-    this.$toast.error(`Server Error`);
+    console.log(`Server Error`);
   } else if (error.response.status === 409) {
-    this.$toast.error(`${error.response.statusText} - Username is already used!`);
+    console.log(`${error.response.statusText} - Username is already used!`);
   } else {
-    this.$toast.error(`${error.response.statusText}`);
+    console.log(`${error.response.statusText}`);
   }
 
   return Promise.reject(error);
