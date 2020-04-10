@@ -22,9 +22,6 @@
 </template>
 
 <script>
-//import { http } from '../services/httpClient'
-//import { mapActions, mapGetters } from 'vuex'
-//import { getAllMovies } from '../services/movieService'
 import { mapGetters } from 'vuex'
 export default {
   methods: {
@@ -34,9 +31,6 @@ export default {
     ...mapGetters(['isAuth']),
     //...mapGetters('movieService', ['allMovies']),
   },
-   created() {
-    //this[getAllMovies]();
- }
 }
 </script>
 

@@ -1,7 +1,10 @@
 <template>
   <v-content  fluid grid-list-xl class="wrapper">
-    <v-layout wrap justify-space-around>
-        <v-card
+    <v-layout
+    wrap
+    justify-space-around>
+        <v-card v-for="movie in allMovies"
+        :key="movie._id"
         outlined
         ripple
         class="card mx-auto"
@@ -12,10 +15,10 @@
           contain
           class="white--text align-end"
           max-height="465px"
-          src="https://static.posters.cz/image/750/%D0%BF%D0%BB%D0%B0%D0%BA%D0%B0%D1%82/batman-v-superman-dawn-of-justice-superman-i28805.jpg"
+          :src="movie.posterImg"
         >
         </v-img>
-        <v-card-title align="center" class="justify-content-between"><div>Superman</div></v-card-title>    
+        <v-card-title align="center" class="justify-content-between"><div>{{movie.title}}</div></v-card-title>    
         <v-card-actions>
         <router-link to="/movie-details">
           <v-btn
@@ -43,7 +46,7 @@
           </v-btn>
         </v-card-actions>
         </v-card>
-        <v-card
+        <!-- <v-card
         outlined
         ripple
         class="card mx-auto"
@@ -117,14 +120,23 @@
             Details
           </v-btn>
         </v-card-actions>
-        </v-card>
+        </v-card> -->
     </v-layout>
   </v-content>
 </template>
-
 <script>
+import { mapActions, mapGetters } from 'vuex'
+import { getAllMovies } from '../../services/movieService'
 export default {
-
+  methods: {
+    ...mapActions('movieService', [getAllMovies]),
+  },
+    computed: {
+    ...mapGetters('movieService', ['allMovies']),
+  },
+  created() {
+    this[getAllMovies]();
+ }
 }
 </script>
 
