@@ -1,6 +1,6 @@
 <template>
   <v-app-bar class="navbar" app color="primary" dark height="85">
-    <router-link to="/">
+    <router-link to="/home">
       <v-btn id="title" text>
         <h3>Cinema</h3>
       </v-btn>
@@ -83,7 +83,7 @@ export default {
     ...mapActions([logout]),
     logout() {
       this[logout]();
-      this.$router.push('/');
+      this.$router.push('/home');
       this.$toast.success('Successfully logouted out!');
     },
   }
