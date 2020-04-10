@@ -1,5 +1,4 @@
 <template>
-<v-jumbotron color="lighten-2" align="center">
   <v-container fill-height>
     <v-layout align-center>
       <v-flex>
@@ -10,7 +9,7 @@
         <router-link to="/login" v-if="!isAuth">
         <v-btn large color="primary" class="mx-0">Login</v-btn>
         </router-link>
-        <div class="text mt-5" align="center" v-if="!isAuth">
+        <div class="text mt-5" v-if="!isAuth">
         Don't have an account?
         <router-link to="/register">Register</router-link>
       </div>
@@ -20,7 +19,6 @@
       </v-flex>
     </v-layout>
   </v-container>
-</v-jumbotron>
 </template>
 
 <script>

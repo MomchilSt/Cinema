@@ -1,19 +1,12 @@
 <template>
   <v-app-bar class="navbar" app color="primary" dark height="85">
-    <router-link to="/">
+    <router-link to="/home">
       <v-btn id="title" text>
         <h3>Cinema</h3>
       </v-btn>
     </router-link>
 
     <v-spacer></v-spacer>
-    <router-link to="/profile"
-    v-if="isAuth">
-        <v-btn text>
-          <v-icon>account_circle</v-icon>
-        <span class="mr-2">Profile</span>
-      </v-btn>
-    </router-link>
     <router-link to="/movie-list"
     v-if="isAuth">
       <v-btn text>
@@ -47,6 +40,13 @@
       <v-btn text>
         <v-icon>add_location</v-icon>
         <span class="mr-2">Create Cinema</span>
+      </v-btn>
+    </router-link>
+    <router-link to="/profile"
+    v-if="isAuth">
+        <v-btn text>
+          <v-icon>account_circle</v-icon>
+        <span class="mr-2">Profile</span>
       </v-btn>
     </router-link>
     <v-btn text @click="logout"

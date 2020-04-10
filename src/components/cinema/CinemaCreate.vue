@@ -63,8 +63,8 @@ export default {
           address: this.address,
           cinemaImg: this.cinemaImg,
         });
-        this.$router.push({ path: '/' })
         this.$toast.success('Successfully Created Cinema!');
+        this.$router.push('/home')
         } catch (err) {
           this.$toast.error(`Error occurred! ${err}`);
           this.$refs.registerForm.reset();
