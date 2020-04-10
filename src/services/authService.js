@@ -1,5 +1,5 @@
 import { http } from '../services/httpClient';
-import { updateUserInfo } from '../services/userService'
+//import { updateUserInfo } from '../services/userService'
 const initialState = {
   isAuth: localStorage.getItem('authtoken') !== null,
   isAdmin: localStorage.getItem('role'),
@@ -21,7 +21,7 @@ const getters = {
 };
 
 const actions = {
-  async [login]({ commit, dispatch }, payload) {
+  async [login]({ commit }, payload) {
     try {
       const { username, password } = payload;
       const { data } = await http.post('login', { username, password });
@@ -34,7 +34,6 @@ const actions = {
       localStorage.setItem('authtoken', data._kmd.authtoken);
       localStorage.setItem('role', data.role);
       localStorage.setItem('userInfo', JSON.stringify(data));
-      dispatch(`userService/${updateUserInfo}`);
       commit(login, {
         userInfo: data,
         authtoken: data._kmd.authtoken,

@@ -4,7 +4,6 @@ import Home from '../components/Home'
 import authRoute from './authRoute'
 import moviesRoute from './moviesRoute'
 import cinemasRoute from './cinemasRoute'
-import NotFound from '../components/common/NotFound'
 import Profile from '../components/user/Profile'
 import { authGuard } from '../services/guards/guards'
 
@@ -12,7 +11,7 @@ Vue.use(VueRouter)
 
 const appRoutes = [
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: Home
   },
@@ -22,11 +21,7 @@ const appRoutes = [
     component: Profile,
     beforeEnter: authGuard
   },
-  {
-    path: '*',
-    name: 'page-not-found',
-    component: NotFound
-}
+
 ]
 
 const routes = [...appRoutes, ...authRoute, ...moviesRoute, ...cinemasRoute];

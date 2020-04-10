@@ -115,7 +115,7 @@ export default {
           password: this.password,
           role: this.select
         });
-        this.$router.push({ path: '/login' })
+        this.$router.push('/login');
         this.$toast.success('Successfully Registered!');
       } catch (err) {
           this.$toast.error(`Error occurred! ${err}`);

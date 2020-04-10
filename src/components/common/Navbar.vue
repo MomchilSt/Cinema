@@ -1,6 +1,6 @@
 <template>
   <v-app-bar class="navbar" app color="primary" dark height="85">
-    <router-link to="/home">
+    <router-link to="/">
       <v-btn id="title" text>
         <h3>Cinema</h3>
       </v-btn>
