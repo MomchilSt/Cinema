@@ -1,13 +1,21 @@
 # Cinema
 
-Cinema is application with admin/user functionality that allows the user to browse movies and watch it's trailer, check out cinemas.
+Cinema is application with admin/user functionality that allows the user to browse movies and watch it's trailer and buy a ticket, admins can create and delete movies/cinemas.
 
-# Users
+# Public part
 
-Users can browse movies, cinemas and buy movie ticket which they can delete if they want.
+* Home page
+* Login page
+* Register page
 
-# Admins
-Admins can create/delete movies and cinemas.
+# Private part
+
+* Movies list page - user and admin
+* Movie details page - user and admin
+* Profle page - user and admin
+* Tickets page - user and admin
+* Create movie page - admin only
+* Create cinema page - admin only
 
 ## Packages 
 vutify
