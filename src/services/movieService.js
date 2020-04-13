@@ -11,7 +11,8 @@ export const actionTypes = {
   getAllMovies: 'GET ALL MOVIES',
   createMovie: 'CREATE NEW MOVIE',
   removeMovie: 'REMOVE MOVIE',
-  buyTicket: 'BUY TICKET'
+  buyTicket: 'BUY TICKET',
+  editMovie: 'EDIT MOVIE'
 };
   
   export const {
@@ -19,6 +20,7 @@ export const actionTypes = {
     getAllMovies,
     buyTicket,
     removeMovie,
+    editMovie
   } = actionTypes;
   
   const getters = {
@@ -47,11 +49,18 @@ const actions = {
     } catch (err) {
       console.log(err)
     }
-},
+  },
   async [removeMovie]( _, payload,) {
     try {
       const { id } = payload;
       await http.delete(`movies/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  async [editMovie](_, payload) {
+    try {
+      await http.put(`movies/${payload._id}`, payload);
     } catch (err) {
       console.log(err);
     }

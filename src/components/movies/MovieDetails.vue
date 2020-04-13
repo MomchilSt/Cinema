@@ -6,7 +6,8 @@
     
     <v-card-title align="center">{{this.title}}</v-card-title>
       <v-card-subtitle class="pb-0">{{this.category}}</v-card-subtitle>
-      <v-btn
+      <v-card-actions>
+        <v-btn
             class="mt-4"
             outlined
             color="error"
@@ -15,6 +16,15 @@
           >
             Delete
           </v-btn>
+        <router-link class="edit pl-5" :to="{ name: '/movie-edit', params: { id: movie._id }}">
+          <v-btn class="mt-4"
+            outlined
+            color="green"
+            text>
+        Edit
+      </v-btn>
+    </router-link>
+      </v-card-actions>
       <v-card-text id="description"  align="center" class="text--primary">
         <div>{{this.description}}</div>
 
@@ -133,7 +143,6 @@ export default {
     await this[getAllMovies]();
     await this[getAllCinemas]();
     this.movie = this.allMovies.filter(x => x._id == this.$route.params.id)[0];
-    console.log(this.allCinemas.filter(x => x.name == this.movie.cinema)[0].address)
     this.id = this.movie._id;
     this.title = this.movie.title;
     this.description = this.movie.description;
@@ -145,6 +154,9 @@ export default {
 </script>
 
 <style scoped>
+.edit{
+  text-decoration: none;
+}
 .v-btn:hover {
       background-color: white;
     }
