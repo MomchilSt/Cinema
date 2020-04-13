@@ -1,6 +1,6 @@
 # Cinema
 
-Cinema is application with admin/user functionality that allows the user to browse movies and watch it's trailer and buy a ticket, admins can create and delete movies/cinemas.
+Cinema is application with admin/user functionality that allows the user to browse movies and watch it's trailer and buy a ticket, admins can create cinemas/movies and delete/edit movies.
 
 # Public part
 
@@ -15,6 +15,7 @@ Cinema is application with admin/user functionality that allows the user to brow
 * Profle page - user and admin
 * Tickets page - user and admin
 * Create movie page - admin only
+* Edit movie page - admin only
 * Create cinema page - admin only
 
 ## Packages 
