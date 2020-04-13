@@ -14,13 +14,13 @@
         <span class="mr-2">Movies</span>
       </v-btn>
     </router-link>
-    <router-link to="/movie-list"
+    <!-- <router-link to="/movie-list"
     v-if="isAuth">
       <v-btn text>
         <v-icon>movie</v-icon>
         <span class="mr-2">Cinemas</span>
       </v-btn>
-    </router-link>
+    </router-link> -->
         <router-link to="/tickets"
         v-if="isAuth">
         <v-btn text>

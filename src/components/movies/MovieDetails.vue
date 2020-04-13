@@ -2,16 +2,24 @@
  <v-card
       class="card mx-auto"
     >
-    <youtube :video-id="videoId" @ready="ready" @playing="playing"></youtube>
+    <youtube :video-id="videoId"></youtube>
     
-    <v-card-title align="center">Man of steel</v-card-title>
-      <v-card-subtitle class="pb-0">Action</v-card-subtitle>
-  
+    <v-card-title align="center">{{this.title}}</v-card-title>
+      <v-card-subtitle class="pb-0">{{this.category}}</v-card-subtitle>
+      <v-btn
+            class="mt-4"
+            outlined
+            color="error"
+            text
+            @click="deleteMovie({ id: movie._id })"
+          >
+            Delete
+          </v-btn>
       <v-card-text id="description"  align="center" class="text--primary">
-        <div>An alien child is evacuated from his dying world and sent to Earth to live among humans. His peace is threatened, when survivors of his home planet invade Earth.</div>
+        <div>{{this.description}}</div>
 
       </v-card-text>
-      <h4>Cinema: Arena</h4>
+      <h4>Cinema: {{this.cinema}}</h4>
       <h4>Next projection: {{projection}}</h4>
   
       <v-card-actions class="actions">  
@@ -20,15 +28,18 @@
          outlined
          @mouseover="hover1 = true"
          @mouseleave="hover1 = false"
+         @click="buyTicket(projection)"
          large color="primary">{{projection}}
          </v-btn>
         <v-btn
          @mouseover="hover2 = true"
          @mouseleave="hover2 = false"
+         @click="buyTicket(secondProjection)"
          outlined large color="primary">{{secondProjection}}</v-btn>
         <v-btn
          @mouseover="hover3 = true"
          @mouseleave="hover3 = false"
+         @click="buyTicket(thirdProjection)"
          outlined large color="primary">{{thirdProjection}}</v-btn>
       </v-card-actions>
       <v-alert class="mt-5"
@@ -55,6 +66,7 @@
       >
         Buy ticket for {{thirdProjection}} projection which costs 12 BGN
       </v-alert>
+      <!-- <v-btn @click="test">sadsa</v-btn> -->
       <!-- <v-btn large color="primary">Buy ticket</v-btn> -->
       <v-divider></v-divider>
       <v-card-subtitle class="pb-0">Get your tickets now!</v-card-subtitle>
@@ -64,19 +76,71 @@
 <script>
 import { getIdFromURL } from '../../../node_modules/vue-youtube-embed'
 import moment from '../../../node_modules/moment/moment'
+import { mapActions, mapGetters } from 'vuex'
+import { getAllCinemas } from '../../services/cinemaService' //asdsadas
+import { getAllMovies, removeMovie } from '../../services/movieService'
+import { buyTicket } from '../../services/ticketService'
 
 export default {
     data() {
         return {
+            id: null,
+            movie: null,
+            title: null,
+            description: null,
+            category: null,
+            cinema : null,
+            address: null,
             hover1: false,
             hover2: false,
             hover3: false,
-            videoId: getIdFromURL("https://www.youtube.com/watch?v=T6DJcgm3wNY"),
+            videoId: null,
             projection: new moment().add(1, 'hour').format('LT'),
             secondProjection: new moment().add(2, 'hour').format('LT'),
-            thirdProjection: new moment().add(3, 'hour').format('LT')
+            thirdProjection: new moment().add(3, 'hour').format('LT'),
         }
     },
+  methods: {
+    ...mapActions('movieService', [getAllMovies, removeMovie]),
+    ...mapActions('ticketService', [buyTicket]),
+    ...mapActions('cinemaService', [getAllCinemas]),
+    deleteMovie(id) {
+      this[removeMovie](id);
+      this.$toast.success('Movie Deleted!');
+    },
+    async buyTicket(projection) {
+      try {
+        await this[buyTicket]({
+          ownerId : this.userInfo._id,
+          projectionTime : projection,
+          title: this.title,
+          category: this.category,
+          cinema: this.cinema,
+          address: this.allCinemas.filter(x => x.name == this.movie.cinema)[0].address
+        })
+        this.$toast.success('Ticket Purchased!');
+      } catch(err) {
+        this.$toast.error(`Error occurred! ${err}`);
+      }
+    }
+  },
+    computed: {
+    ...mapGetters('movieService', ['allMovies']),
+    ...mapGetters('userService', ['userInfo']),
+    ...mapGetters('cinemaService', ['allCinemas']),
+  },
+  async created() {
+    await this[getAllMovies]();
+    await this[getAllCinemas]();
+    this.movie = this.allMovies.filter(x => x._id == this.$route.params.id)[0];
+    console.log(this.allCinemas.filter(x => x.name == this.movie.cinema)[0].address)
+    this.id = this.movie._id;
+    this.title = this.movie.title;
+    this.description = this.movie.description;
+    this.category = this.movie.category;
+    this.cinema = this.movie.cinema;
+    this.videoId = getIdFromURL(this.movie.trailerLink);
+  }
 }
 </script>
 

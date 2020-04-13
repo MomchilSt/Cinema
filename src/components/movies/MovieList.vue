@@ -20,7 +20,7 @@
         </v-img>
         <v-card-title align="center" class="justify-content-between"><div>{{movie.title}}</div></v-card-title>    
         <v-card-actions>
-        <router-link to="/movie-details">
+        <router-link :to="{ name: '/movie-details', params: { id: movie._id }}">
           <v-btn
             outlined
             color="primary"
@@ -29,21 +29,6 @@
             Details
           </v-btn>
         </router-link>
-          <v-btn
-            outlined
-            color="warning"
-            text
-            elevation="20"
-          >
-            Edit
-          </v-btn>
-          <v-btn
-            outlined
-            color="error"
-            text
-          >
-            Delete
-          </v-btn>
         </v-card-actions>
         </v-card>
         <!-- <v-card

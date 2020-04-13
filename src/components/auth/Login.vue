@@ -60,7 +60,7 @@ export default {
           username: this.username,
           password: this.password,
         });
-      this.$router.push ('/home');
+      this.$router.push('/home');
       this.$toast.success('Successfully Logged!');
       } catch (err) {
         this.$toast.error(`Login Error occurred!`);

@@ -7,7 +7,7 @@ import NotFound from '../components/common/NotFound'
 
 export default [
     { path: '/movie-create', name: '/movie-create', component: MovieCreate, beforeEnter: adminGuard },
-    { path: '/movie-details', name: '/movie-details', component: MovieDetails, beforeEnter: authGuard },
+    { path: '/movie-details/:id', name: '/movie-details', component: MovieDetails, beforeEnter: authGuard },
     { path: '/movie-list', name: '/movie-list', component: MovieList, beforeEnter: authGuard},
     { path: '/tickets', name: '/tickets', component: Tickets, beforeEnter: authGuard },
     {

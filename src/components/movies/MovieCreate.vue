@@ -114,8 +114,8 @@ export default {
           description: this.description,
           posterImg: this.posterImg,
           trailerLink: this.trailerLink,
-          category: this.categories,
-          cinema: this.cinemas
+          category: this.category,
+          cinema: this.cinema
         });
         this.$router.push({ path: '/movie-list' })
         this.$toast.success('Successfully Created Movie!');

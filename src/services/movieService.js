@@ -2,16 +2,23 @@ import { http } from './httpClient';
 
 const initialState = {
     allMovies: [],
+    movie: {
+      _id: null,
+    }
 };
 
 export const actionTypes = {
   getAllMovies: 'GET ALL MOVIES',
   createMovie: 'CREATE NEW MOVIE',
-  };
+  removeMovie: 'REMOVE MOVIE',
+  buyTicket: 'BUY TICKET'
+};
   
   export const {
     createMovie,
-    getAllMovies
+    getAllMovies,
+    buyTicket,
+    removeMovie,
   } = actionTypes;
   
   const getters = {
@@ -27,14 +34,28 @@ const actions = {
      console.log(err)
    }
   },
-    async [createMovie](_, payload) {
-        try {
-          await http.post('movies', payload);
-        } catch (err) {
-          console.log(err)
-        }
-      },
-      
+  async [createMovie](_, payload) {
+      try {
+        await http.post('movies', payload);
+      } catch (err) {
+        console.log(err)
+      }
+  },
+  async [buyTicket](_, payload) {
+    try {
+      await http.post('tickets', payload);
+    } catch (err) {
+      console.log(err)
+    }
+},
+  async [removeMovie]( _, payload,) {
+    try {
+      const { id } = payload;
+      await http.delete(`movies/${id}`);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 const mutations = {

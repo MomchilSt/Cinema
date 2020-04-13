@@ -7,7 +7,7 @@
       </v-card-title>
       <v-data-table calculate-widths
         :headers="headers"
-        :items="desserts"
+        :items="ownerTickets"
         hide-default-footer
       ></v-data-table>
     </v-card>
@@ -15,47 +15,38 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+import { getAllTickets } from '../../services/ticketService'
 export default {
  data () {
     return {
+      tickets: null,
       headers: [
-        {
-          text: 'Movie',
-          align: 'start',
-          value: 'name',
-        },
-        { text: 'Cinema', value: 'calories' },
-        { text: 'Projection', value: 'fat' },
-        { text: 'Price', value: 'carbs' }
+        { text: 'Movie',  align: 'start', value: 'title' },
+        { text: 'Movie category', value: 'category' },
+        { text: 'Cinema', value: 'cinema' },
+        { text: 'Projection', value: 'projectionTime' },
+        { text: 'Cinema address', value: 'address' },
       ],
-      desserts: [
-        {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24
-        },
-        {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-        },
-        {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-        },
-        {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67
-        },
-      ],
+      ownerTickets: []
     }
   },
+    methods: {
+    ...mapActions('ticketService', [getAllTickets]),
+  },
+    computed: {
+    ...mapGetters('ticketService', ['allTickets']),
+    ...mapGetters('userService', ['userInfo']),
+  },
+  async created() {
+    await this[getAllTickets]();
+    this.tickets = this.allTickets.filter(x => x.ownerId == this.userInfo._id);
+    this.tickets.forEach(x => {
+      this.ownerTickets.push({title: x.title, category: x.category, cinema: x.cinema, projectionTime: x.projectionTime, address: x.address})
+      
+    });
+
+ }
 }
 </script>
 

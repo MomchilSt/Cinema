@@ -4,6 +4,7 @@ import authService from '../services/authService'
 import movieService from '../services/movieService'
 import cinemaService from '../services/cinemaService'
 import userService from '../services/userService'
+import ticketService from '../services/ticketService'
 
 
 Vue.use(Vuex)
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     authService,
     movieService,
     cinemaService,
-    userService
+    userService,
+    ticketService
   }
 })

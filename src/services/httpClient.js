@@ -4,7 +4,7 @@ import { cacheAdapterEnhancer } from 'axios-extensions';
 const baseUrl = 'https://baas.kinvey.com';
 const appKey = 'kid_ryXFIsuw8';
 const appSecret = '14b24eb6f4644e779632088dbd98e7ef';
-const dbCollections = ['movies', 'cinemas'];
+const dbCollections = ['movies', 'cinemas', 'tickets'];
 
 const cacheConfig = {
   enabledByDefault: false,
