@@ -43,7 +43,7 @@ export default {
     this.tickets = this.allTickets.filter(x => x.ownerId == this.userInfo._id);
     this.tickets.forEach(x => {
       this.ownerTickets.push({title: x.title, category: x.category, cinema: x.cinema, projectionTime: x.projectionTime, address: x.address})
-      
+      //rewrite this!!
     });
 
  }
