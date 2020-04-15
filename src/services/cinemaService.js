@@ -26,7 +26,6 @@ const actions = {
     async [createCinema](_, payload) {
         try {
           await http.post('cinemas', payload);
-          //toastSuccess('Successfully create student!');
         } catch (err) {
           console.log(err)
         }
